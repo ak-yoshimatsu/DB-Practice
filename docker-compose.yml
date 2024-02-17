@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  db:
+    build: ./mysql
+    container_name: mysql
+    platform: linux/amd64
+    environment:
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_password
+      MYSQL_ROOT_PASSWORD: test_root_password
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - 13306:3306
+
+volumes:
+  db-store:
